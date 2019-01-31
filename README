@@ -1,0 +1,3 @@
+If anyone using iex api ro others in VB6 you will need a good json PARSER
+
+I'm sucessefully using jsonbag.cls I found on web and I thought it is nice to share it, although the authors are named in the source file
