@@ -1,0 +1,57 @@
+USE [pump]
+GO
+
+/****** Object:  Table [dbo].[Market1m_Today]    Script Date: 03-02-2019 08:28:53 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Market1m_Today](
+	[IdSeq] [bigint] IDENTITY(1,1) NOT NULL,
+	[IdStock] [smallint] NOT NULL,
+	[extendedPrice] [real] NULL,
+	[latestPrice] [real] NULL,
+	[iexRealtimePrice] [real] NULL,
+	[latestVolume] [bigint] NULL,
+	[avgTotalVolume] [bigint] NULL,
+	[extendedChangePercent] [real] NULL,
+	[extendedPriceTime] [datetime2](0) NULL,
+	[latestSource] [nvarchar](20) NULL,
+	[latestTime] [nvarchar](12) NULL,
+	[changePercent] [real] NULL,
+	[low] [real] NULL,
+	[high] [real] NULL,
+	[Data] [date] NULL,
+	[Hora] [nvarchar](8) NULL,
+	[iexBidPrice] [real] NULL,
+	[iexBidSize] [int] NULL,
+	[iexAskPrice] [real] NULL,
+	[iexAskSize] [int] NULL,
+	[IdTrade] [bigint] NULL,
+ CONSTRAINT [PK_Market1m_Today_IdSeq] PRIMARY KEY CLUSTERED 
+(
+	[IdSeq] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IX_Market1m_Today_1] UNIQUE NONCLUSTERED 
+(
+	[IdStock] ASC,
+	[Data] ASC,
+	[Hora] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Market1m_Today]  WITH CHECK ADD  CONSTRAINT [FK_Market1m_Today_Trades] FOREIGN KEY([IdTrade])
+REFERENCES [dbo].[Trades] ([IdTrade])
+ON DELETE SET NULL
+GO
+
+ALTER TABLE [dbo].[Market1m_Today] CHECK CONSTRAINT [FK_Market1m_Today_Trades]
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_SSMA_SOURCE', @value=N'pump.Market1m_Today' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Market1m_Today'
+GO
+
+
